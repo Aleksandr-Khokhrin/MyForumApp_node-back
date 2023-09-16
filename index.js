@@ -17,6 +17,14 @@ mongoose
 
 const app = express();
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Разрешить доступ всем доменам (не рекомендуется в продакшене)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Разрешенные методы
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Разрешенные заголовки
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); // Разрешить передачу учетных данных (например, куки)
+    next();
+  });
+
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
         cb(null, 'uploads');
