@@ -13,7 +13,6 @@ import {UserController, PostController} from './controllers/index.js';
 import {checkAuth, handleValidationErrors} from './utils/index.js';
 
 
-const port = 4444
 mongoose
 .connect(process.env.MONGO_URL)
 .then(() => console.log('DB ok'))
@@ -31,6 +30,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage })
+const port = process.env.PORT || 4444;
 
 app.use(express.json());
 app.use(cors())
