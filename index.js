@@ -2,6 +2,9 @@ import express from 'express';
 import multer from 'multer';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
@@ -11,7 +14,7 @@ import {checkAuth, handleValidationErrors} from './utils/index.js';
 
 
 mongoose
-.connect('mongodb+srv://lksndrhohrin:RAh3sU13SnEk8luY@cluster0.y3m8djz.mongodb.net/blog?retryWrites=true&w=majority')
+.connect(process.env.MONGO_URL)
 .then(() => console.log('DB ok'))
 .catch((err) => console.log('DB error', err))
 
