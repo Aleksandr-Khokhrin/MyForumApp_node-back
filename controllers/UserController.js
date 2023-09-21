@@ -84,3 +84,33 @@ export const getMe = async(req, res) => {
         })
     }
 };
+export const update = async (req, res) => {
+    try {
+        const { fullName, avatarUrl } = req.body;
+
+        if (!req.userId) {
+            return res.status(401).json({
+                message: 'Пользователь не авторизован',
+            });
+        }
+        const user = await UserModel.findById(req.userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'Пользователь не найден',
+            });
+        }
+        user.fullName = fullName;
+        user.avatarUrl = avatarUrl;
+
+        await user.save();
+        res.json({
+            message: 'Профиль пользователя успешно обновлен',
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Не удалось обновить профиль пользователя',
+        });
+    }
+};
