@@ -37,7 +37,7 @@ const port = 4444
 app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login)
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth , UserController.getMe)
-app.patch('/auth/me', checkAuth, UserController.update)
+// app.patch('/auth/me', checkAuth, UserController.update)
 
 app.post('/upload', checkAuth, upload.single('image'), (req, res) =>{
     res.json({
