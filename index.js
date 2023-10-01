@@ -57,6 +57,7 @@ app.get('/posts/:id', PostController.getOne)
 app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create)
 app.delete('/posts/:id', checkAuth, PostController.remove)
 app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors, PostController.update)
+app.patch('/posts/like/:id', checkAuth, PostController.likesState)
 
 
 app.listen(port, (err) => {

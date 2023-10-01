@@ -86,7 +86,7 @@ export const getMe = async(req, res) => {
 };
 export const update = async (req, res) => {
     try {
-        const { fullName, avatarUrl } = req.body;
+        const { fullName, avatarUrl, email } = req.body;
 
         if (!req.userId) {
             return res.status(401).json({
@@ -101,6 +101,7 @@ export const update = async (req, res) => {
             });
         }
         user.fullName = fullName;
+        user.email = email;
         user.avatarUrl = avatarUrl;
 
         await user.save();

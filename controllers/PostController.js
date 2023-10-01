@@ -95,6 +95,7 @@ export const create =  async (req, res) => {
             text: req.body.text,
             imageUrl: req.body.imageUrl,
             tags: req.body.tags.split(','),
+            likes: req.body.likes,
             user: req.userId,
             estimation: req.body.estimation,
         })
@@ -123,6 +124,7 @@ export const update = async(req, res) => {
                 text: req.body.text,
                 imageUrl: req.body.imageUrl,
                 tags: req.body.tags.split(','),
+                likes: req.body.likes,
                 user: req.userId,
                 estimation: req.body.estimation,
             }, 
@@ -138,5 +140,31 @@ export const update = async(req, res) => {
         res.status(500).json({
             message: "Не удалось обновить статью",
         })
+    }
+};
+
+export const likesState = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const { likes } = req.body;
+
+        const post = await PostModel.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({
+                message: 'Рецензия не найдена',
+            });
+        }
+        post.likes = likes;
+
+        await post.save();
+        res.json({
+            message: 'Лайк успешно добавлен',
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Не удалось добавить лайк',
+        });
     }
 };
